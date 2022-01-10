@@ -4,4 +4,6 @@ import java.util.List;
 
 public interface ColorsRepo {
     List<ColorEntity> getColors();
+
+    void deleteItem(String id);
 }

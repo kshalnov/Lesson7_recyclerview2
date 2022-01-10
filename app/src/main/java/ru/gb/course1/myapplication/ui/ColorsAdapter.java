@@ -13,11 +13,12 @@ import ru.gb.course1.myapplication.domain.ColorEntity;
 public class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder> {
     private final List<ColorEntity> data = new ArrayList<>();
     private int holdersCounters = 0;
+    private ColorViewHolder.OnItemClickListener onItemClickListener = null;
 
     @NonNull
     @Override
     public ColorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ColorViewHolder(parent, holdersCounters++);
+        return new ColorViewHolder(parent, holdersCounters++, onItemClickListener);
     }
 
     @Override
@@ -39,5 +40,19 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder> {
         data.clear();
         data.addAll(colors);
         notifyDataSetChanged();
+    }
+
+    public void deleteItem(String itemId) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId().equals(itemId)) {
+                data.remove(i);
+                notifyItemRemoved(i);
+                return;
+            }
+        }
+    }
+
+    public void setOnItemClickListener(ColorViewHolder.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }

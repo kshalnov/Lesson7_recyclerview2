@@ -24,6 +24,16 @@ public class SimpleColorsRepoImpl implements ColorsRepo {
         return new ArrayList<>(data);
     }
 
+    @Override
+    public void deleteItem(String id) {
+        for (int i = 0; i < data.size(); i++) {
+            if (data.get(i).getId().equals(id)) {
+                data.remove(i);
+                return;
+            }
+        }
+    }
+
     public void regenerateColors(int size) {
         for (int i = 0; i < size; i++) {
             ColorEntity colorEntity = new ColorEntity(

@@ -4,14 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/activity_main__root_linear_layout"
     tools:context=".ui.MainActivity">
 
     <com.google.android.material.button.MaterialButton
-        android:id="@+id/activity_main__add_button"
+        android:id="@+id/activity_main__scroll_button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="Add color" />
+        android:text="Scroll to end" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/activity_main__recycler_view"
