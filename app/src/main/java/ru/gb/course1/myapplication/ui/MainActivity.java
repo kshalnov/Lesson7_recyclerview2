@@ -1,18 +1,15 @@
 package ru.gb.course1.myapplication.ui;
 
+import android.os.Bundle;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.os.Bundle;
-
+import ru.gb.course1.myapplication.App;
 import ru.gb.course1.myapplication.R;
-import ru.gb.course1.myapplication.data.SimpleColorsRepoImpl;
-import ru.gb.course1.myapplication.domain.ColorsRepo;
 
 public class MainActivity extends AppCompatActivity {
-    private ColorsRepo colorsRepo = new SimpleColorsRepoImpl();
-
     private ColorsAdapter adapter;
     private RecyclerView recyclerView;
 
@@ -29,6 +26,6 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ColorsAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.setData(colorsRepo.getColors());
+        adapter.setData(App.get().colorsRepo.getColors());
     }
 }
