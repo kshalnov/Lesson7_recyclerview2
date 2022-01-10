@@ -15,9 +15,11 @@ import ru.gb.course1.myapplication.domain.ColorEntity;
 public class ColorViewHolder extends RecyclerView.ViewHolder {
     private final TextView nameTextView = itemView.findViewById(R.id.item_color__name_text_view);
     private final CardView rootCardView = itemView.findViewById(R.id.item_color__root_card_view);
+    private final TextView numberTextView = itemView.findViewById(R.id.item_color__number_text_view);
 
-    public ColorViewHolder(@NonNull ViewGroup parent) {
+    public ColorViewHolder(@NonNull ViewGroup parent, int holderNumber) {
         super(LayoutInflater.from(parent.getContext()).inflate(R.layout.item_color, parent, false));
+        numberTextView.setText(String.valueOf(holderNumber));
     }
 
     public void bind(ColorEntity item) {

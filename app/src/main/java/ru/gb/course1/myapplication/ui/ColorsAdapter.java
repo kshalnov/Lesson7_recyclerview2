@@ -12,11 +12,12 @@ import ru.gb.course1.myapplication.domain.ColorEntity;
 
 public class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder> {
     private final List<ColorEntity> data = new ArrayList<>();
+    private int holdersCounters = 0;
 
     @NonNull
     @Override
     public ColorViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        return new ColorViewHolder(parent);
+        return new ColorViewHolder(parent, holdersCounters++);
     }
 
     @Override
