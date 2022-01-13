@@ -26,7 +26,7 @@ public class MainActivity
             Fragment colorsListFragment = new ColorsListFragment();
             getSupportFragmentManager()
                     .beginTransaction()
-                    .add(R.id.activity_main__fragment_container, colorsListFragment, TAG_LIST_FRAGMENT)
+                    .add(R.id.activity_main__main_fragment_container, colorsListFragment, TAG_LIST_FRAGMENT)
                     .commit();
         }
     }
@@ -38,7 +38,7 @@ public class MainActivity
         Fragment colorDetailsFragment = ColorDetailsFragment.newInstance(colorEntity);
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.activity_main__fragment_container, colorDetailsFragment)
+                .add(R.id.activity_main__details_fragment_container, colorDetailsFragment)
                 .addToBackStack(null)
                 .commit();
     }
@@ -48,7 +48,8 @@ public class MainActivity
         Toast.makeText(this, "Delete " + colorId, Toast.LENGTH_SHORT).show();
         getSupportFragmentManager().popBackStack();
         ColorsListFragment colorsListFragment = (ColorsListFragment) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
-        if (colorsListFragment == null) throw new IllegalStateException("ColorsListFragment not on screen");
+        if (colorsListFragment == null)
+            throw new IllegalStateException("ColorsListFragment not on screen");
         colorsListFragment.onDeleteColor(colorId);
     }
 }
