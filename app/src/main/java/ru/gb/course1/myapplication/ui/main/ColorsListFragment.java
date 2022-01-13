@@ -1,7 +1,6 @@
 package ru.gb.course1.myapplication.ui.main;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,7 +18,6 @@ import ru.gb.course1.myapplication.App;
 import ru.gb.course1.myapplication.R;
 import ru.gb.course1.myapplication.domain.ColorEntity;
 import ru.gb.course1.myapplication.domain.ColorsRepo;
-import ru.gb.course1.myapplication.ui.details.ColorDetailsActivity;
 
 public class ColorsListFragment extends Fragment {
     private ColorsAdapter adapter;
@@ -28,9 +26,16 @@ public class ColorsListFragment extends Fragment {
 
     private ColorsRepo colorsRepo;
 
+    private Controller controller;
+
     @Override
     public void onAttach(@NonNull Context context) {
         super.onAttach(context);
+        if (context instanceof Controller) {
+            controller = (Controller) context;
+        } else {
+            throw new IllegalStateException("Activity must implement ColorsListFragment.Controller");
+        }
     }
 
     @Nullable
@@ -72,11 +77,13 @@ public class ColorsListFragment extends Fragment {
 
             @Override
             public void onClickItem(ColorEntity item) {
-                Intent intent = new Intent(getContext(), ColorDetailsActivity.class);
-                intent.putExtra(ColorDetailsActivity.COLOR_EXTRA_KEY, item);
-                startActivity(intent);
+                controller.showColorDetails(item);
             }
         });
+    }
+
+    interface Controller {
+        void showColorDetails(ColorEntity colorEntity);
     }
 
 }
