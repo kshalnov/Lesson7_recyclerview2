@@ -64,7 +64,9 @@ public class ColorsListFragment extends Fragment {
         adapter.setOnItemClickListener(new ColorViewHolder.OnItemClickListener() {
             @Override
             public void onDeleteItem(ColorEntity item) {
-                onDeleteColor(item);
+                Toast.makeText(getContext(), "Delete " + item.getHexString(), Toast.LENGTH_SHORT).show();
+                colorsRepo.deleteItem(item.getId());
+                adapter.deleteItem(item.getId());
             }
 
             @Override
@@ -80,10 +82,8 @@ public class ColorsListFragment extends Fragment {
         });
     }
 
-    public void onDeleteColor(ColorEntity colorEntity) {
-        Toast.makeText(getContext(), "Delete " + colorEntity.getHexString(), Toast.LENGTH_SHORT).show();
-        colorsRepo.deleteItem(colorEntity.getId());
-        adapter.deleteItem(colorEntity.getId());
+    public void onDeleteColor(String colorId) {
+        adapter.setData(colorsRepo.getColors());
     }
 
     public interface Controller {

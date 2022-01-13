@@ -13,6 +13,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import ru.gb.course1.myapplication.App;
 import ru.gb.course1.myapplication.R;
 import ru.gb.course1.myapplication.domain.ColorEntity;
 
@@ -63,13 +64,14 @@ public class ColorDetailsFragment extends Fragment {
 
 
         deleteButton.setOnClickListener(v -> {
-            controller.onDeleteColor(colorEntity);
+            App.get().colorsRepo.deleteItem(colorEntity.getId());
+            controller.onDeleteColor(colorEntity.getId());
         });
         rootLayout.setBackgroundColor(colorEntity.getColor());
         colorNameTextView.setText(colorEntity.getHexString());
     }
 
     public interface Controller {
-        void onDeleteColor(ColorEntity colorEntity);
+        void onDeleteColor(String colorId);
     }
 }

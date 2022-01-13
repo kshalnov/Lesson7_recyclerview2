@@ -44,11 +44,11 @@ public class MainActivity
     }
 
     @Override
-    public void onDeleteColor(ColorEntity colorEntity) {
-        Toast.makeText(this, "Delete " + colorEntity.getHexString(), Toast.LENGTH_SHORT).show();
+    public void onDeleteColor(String colorId) {
+        Toast.makeText(this, "Delete " + colorId, Toast.LENGTH_SHORT).show();
         getSupportFragmentManager().popBackStack();
         ColorsListFragment colorsListFragment = (ColorsListFragment) getSupportFragmentManager().findFragmentByTag(TAG_LIST_FRAGMENT);
         if (colorsListFragment == null) throw new IllegalStateException("ColorsListFragment not on screen");
-        colorsListFragment.onDeleteColor(colorEntity);
+        colorsListFragment.onDeleteColor(colorId);
     }
 }
