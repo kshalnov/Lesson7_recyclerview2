@@ -1,4 +1,4 @@
-package ru.gb.course1.myapplication.ui.main;
+package ru.gb.course1.myapplication.ui.list;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -64,9 +64,7 @@ public class ColorsListFragment extends Fragment {
         adapter.setOnItemClickListener(new ColorViewHolder.OnItemClickListener() {
             @Override
             public void onDeleteItem(ColorEntity item) {
-                Toast.makeText(getContext(), "Delete " + item.getHexString(), Toast.LENGTH_SHORT).show();
-                colorsRepo.deleteItem(item.getId());
-                adapter.deleteItem(item.getId());
+                onDeleteColor(item);
             }
 
             @Override
@@ -82,7 +80,13 @@ public class ColorsListFragment extends Fragment {
         });
     }
 
-    interface Controller {
+    public void onDeleteColor(ColorEntity colorEntity) {
+        Toast.makeText(getContext(), "Delete " + colorEntity.getHexString(), Toast.LENGTH_SHORT).show();
+        colorsRepo.deleteItem(colorEntity.getId());
+        adapter.deleteItem(colorEntity.getId());
+    }
+
+    public interface Controller {
         void showColorDetails(ColorEntity colorEntity);
     }
 

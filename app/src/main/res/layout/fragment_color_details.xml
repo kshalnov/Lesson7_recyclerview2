@@ -3,17 +3,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_color_details__root_linear_layout"
     android:layout_width="match_parent"
-    android:background="@color/purple_200"
     android:layout_height="match_parent"
+    android:background="@color/purple_200"
     android:orientation="vertical"
-    tools:context=".ui.main.MainActivity">
+    tools:context=".ui.MainActivity">
 
     <TextView
-        android:id="@+id/activity_color_details__color_name_text_view"
+        android:id="@+id/fragment_color_details__color_name_text_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:gravity="center"
         android:textSize="56sp"
         android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/fragment_color__details_delete_button"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Delete" />
 
 </LinearLayout>
