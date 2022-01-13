@@ -1,6 +1,9 @@
 package ru.gb.course1.myapplication.domain;
 
-public class ColorEntity {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class ColorEntity implements Parcelable {
     private String id;
     private int color;
 
@@ -8,6 +11,34 @@ public class ColorEntity {
         this.id = id;
         this.color = color;
     }
+
+    protected ColorEntity(Parcel in) {
+        id = in.readString();
+        color = in.readInt();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeInt(color);
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Creator<ColorEntity> CREATOR = new Creator<ColorEntity>() {
+        @Override
+        public ColorEntity createFromParcel(Parcel in) {
+            return new ColorEntity(in);
+        }
+
+        @Override
+        public ColorEntity[] newArray(int size) {
+            return new ColorEntity[size];
+        }
+    };
 
     public String getId() {
         return id;

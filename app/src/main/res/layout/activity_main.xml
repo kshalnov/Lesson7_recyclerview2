@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/activity_main__root_linear_layout"
-    tools:context=".ui.MainActivity">
+    tools:context=".ui.main.MainActivity">
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/activity_main__scroll_button"

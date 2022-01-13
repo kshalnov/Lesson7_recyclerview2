@@ -1,5 +1,6 @@
-package ru.gb.course1.myapplication.ui;
+package ru.gb.course1.myapplication.ui.main;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.LinearLayout;
@@ -13,6 +14,7 @@ import ru.gb.course1.myapplication.App;
 import ru.gb.course1.myapplication.R;
 import ru.gb.course1.myapplication.domain.ColorEntity;
 import ru.gb.course1.myapplication.domain.ColorsRepo;
+import ru.gb.course1.myapplication.ui.details.ColorDetailsActivity;
 
 public class MainActivity extends AppCompatActivity {
     private ColorsAdapter adapter;
@@ -53,12 +55,15 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onRefreshItem(ColorEntity item) {
+                // todo
                 Toast.makeText(MainActivity.this, "Refresh " + item.getHexString(), Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onClickItem(ColorEntity item) {
-                rootLinearLayout.setBackgroundColor(item.getColor());
+                Intent intent = new Intent(MainActivity.this, ColorDetailsActivity.class);
+                intent.putExtra(ColorDetailsActivity.COLOR_EXTRA_KEY, item);
+                startActivity(intent);
             }
         });
     }

@@ -1,4 +1,4 @@
-package ru.gb.course1.myapplication.ui;
+package ru.gb.course1.myapplication.ui.main;
 
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
