@@ -16,8 +16,9 @@ import androidx.fragment.app.Fragment;
 import ru.gb.course1.myapplication.App;
 import ru.gb.course1.myapplication.R;
 import ru.gb.course1.myapplication.domain.ColorEntity;
+import ru.gb.course1.myapplication.ui.base.BaseFragment;
 
-public class ColorDetailsFragment extends Fragment {
+public class ColorDetailsFragment extends BaseFragment {
 
     private static final String COLOR_ARG_KEY = "COLOR_ARG_KEY";
 
@@ -51,11 +52,13 @@ public class ColorDetailsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_color_details, container, false);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         rootLayout = view.findViewById(R.id.activity_color_details__root_linear_layout);
         colorNameTextView = view.findViewById(R.id.fragment_color_details__color_name_text_view);
         deleteButton = view.findViewById(R.id.fragment_color__details_delete_button);

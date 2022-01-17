@@ -2,6 +2,7 @@ package ru.gb.course1.myapplication.ui.list;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,8 +19,10 @@ import ru.gb.course1.myapplication.App;
 import ru.gb.course1.myapplication.R;
 import ru.gb.course1.myapplication.domain.ColorEntity;
 import ru.gb.course1.myapplication.domain.ColorsRepo;
+import ru.gb.course1.myapplication.ui.base.BaseFragment;
 
-public class ColorsListFragment extends Fragment {
+public class ColorsListFragment extends BaseFragment {
+
     private ColorsAdapter adapter;
     private RecyclerView recyclerView;
     private Button scrollButton;
@@ -33,6 +36,7 @@ public class ColorsListFragment extends Fragment {
         super.onAttach(context);
         if (context instanceof Controller) {
             controller = (Controller) context;
+            colorsRepo = App.get().colorsRepo;
         } else {
             throw new IllegalStateException("Activity must implement ColorsListFragment.Controller");
         }
@@ -41,12 +45,13 @@ public class ColorsListFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        super.onCreateView(inflater, container, savedInstanceState);
         return inflater.inflate(R.layout.fragment_colors_list, container, false); // todo переименовать в fragment_colors_list
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        colorsRepo = App.get().colorsRepo;
+        super.onViewCreated(view, savedInstanceState);
 
         scrollButton = view.findViewById(R.id.fragment_colors_list__scroll_button);
         scrollButton.setOnClickListener(v -> {
