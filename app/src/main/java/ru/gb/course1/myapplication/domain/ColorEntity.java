@@ -4,7 +4,7 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ColorEntity implements Parcelable {
-    private String id;
+    private final String id;
     private int color;
 
     public ColorEntity(String id, int color) {

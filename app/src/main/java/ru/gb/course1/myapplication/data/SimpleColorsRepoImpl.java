@@ -15,8 +15,12 @@ public class SimpleColorsRepoImpl implements ColorsRepo {
 
     private final List<ColorEntity> data = new ArrayList<>();
 
+    public SimpleColorsRepoImpl(int size) {
+        regenerateColors(size);
+    }
+
     public SimpleColorsRepoImpl() {
-        regenerateColors(COLORS_LIST_SIZE);
+        this(COLORS_LIST_SIZE);
     }
 
     @Override
@@ -34,7 +38,7 @@ public class SimpleColorsRepoImpl implements ColorsRepo {
         }
     }
 
-    public void regenerateColors(int size) {
+    private void regenerateColors(int size) {
         for (int i = 0; i < size; i++) {
             ColorEntity colorEntity = new ColorEntity(
                     UUID.randomUUID().toString(),

@@ -50,8 +50,7 @@ public class ColorViewHolder extends RecyclerView.ViewHolder {
 
         colorEntity = item;
     }
-
-
+    
     public interface OnItemClickListener {
         void onDeleteItem(ColorEntity item);
 
