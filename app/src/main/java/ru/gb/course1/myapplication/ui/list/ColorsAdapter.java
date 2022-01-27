@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import ru.gb.course1.myapplication.domain.ColorEntity;
 
@@ -14,6 +15,10 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder> {
     private final List<ColorEntity> data = new ArrayList<>();
     private int holdersCounters = 0;
     private ColorViewHolder.OnItemClickListener onItemClickListener = null;
+
+    ColorsAdapter() {
+        setHasStableIds(true);
+    }
 
     @NonNull
     @Override
@@ -25,6 +30,11 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder> {
     public void onBindViewHolder(@NonNull ColorViewHolder holder, int position) {
         ColorEntity colorEntity = getItem(position);
         holder.bind(colorEntity);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return UUID.fromString(getItem(position).getId()).getLeastSignificantBits();
     }
 
     private ColorEntity getItem(int position) {

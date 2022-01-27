@@ -18,11 +18,12 @@ import ru.gb.course1.myapplication.App;
 import ru.gb.course1.myapplication.R;
 import ru.gb.course1.myapplication.domain.ColorEntity;
 import ru.gb.course1.myapplication.domain.ColorsRepo;
+import ru.gb.course1.myapplication.util.Utils;
 
 public class ColorsListFragment extends Fragment {
     private ColorsAdapter adapter;
     private RecyclerView recyclerView;
-    private Button scrollButton;
+    private Button generateColorButton;
 
     private ColorsRepo colorsRepo;
 
@@ -48,9 +49,11 @@ public class ColorsListFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         colorsRepo = App.get().colorsRepo;
 
-        scrollButton = view.findViewById(R.id.fragment_colors_list__scroll_button);
-        scrollButton.setOnClickListener(v -> {
-            recyclerView.smoothScrollToPosition(adapter.getItemCount() - 1);
+        generateColorButton = view.findViewById(R.id.fragment_colors_list__generate_color_button);
+        generateColorButton.setOnClickListener(v -> {
+            final ColorEntity color = Utils.randomColor();
+            colorsRepo.addColor(color);
+            adapter.setData(colorsRepo.getColors());
         });
         initRecycler(view);
     }
