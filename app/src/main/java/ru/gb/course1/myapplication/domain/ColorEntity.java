@@ -4,6 +4,19 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class ColorEntity implements Parcelable {
+    private static final String DELIMETER_SYMBOL = "@";
+
+    public static final Creator<ColorEntity> CREATOR = new Creator<ColorEntity>() {
+        @Override
+        public ColorEntity createFromParcel(Parcel in) {
+            return new ColorEntity(in);
+        }
+
+        @Override
+        public ColorEntity[] newArray(int size) {
+            return new ColorEntity[size];
+        }
+    };
     private final String id;
     private int color;
 
@@ -27,18 +40,6 @@ public class ColorEntity implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<ColorEntity> CREATOR = new Creator<ColorEntity>() {
-        @Override
-        public ColorEntity createFromParcel(Parcel in) {
-            return new ColorEntity(in);
-        }
-
-        @Override
-        public ColorEntity[] newArray(int size) {
-            return new ColorEntity[size];
-        }
-    };
 
     public String getId() {
         return id;
