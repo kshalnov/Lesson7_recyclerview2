@@ -3,8 +3,9 @@ package ru.gb.course1.myapplication.domain;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-public class ColorEntity implements Parcelable {
-    private static final String DELIMETER_SYMBOL = "@";
+import java.io.Serializable;
+
+public class ColorEntity implements Parcelable, Serializable {
 
     public static final Creator<ColorEntity> CREATOR = new Creator<ColorEntity>() {
         @Override
@@ -17,8 +18,11 @@ public class ColorEntity implements Parcelable {
             return new ColorEntity[size];
         }
     };
-    private final String id;
+    private String id;
     private int color;
+
+    public ColorEntity() {
+    }
 
     public ColorEntity(String id, int color) {
         this.id = id;
