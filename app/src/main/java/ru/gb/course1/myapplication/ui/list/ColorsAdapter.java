@@ -52,16 +52,6 @@ public class ColorsAdapter extends RecyclerView.Adapter<ColorViewHolder> {
         notifyDataSetChanged();
     }
 
-    public void deleteItem(String itemId) {
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getId().equals(itemId)) {
-                data.remove(i);
-                notifyItemRemoved(i);
-                return;
-            }
-        }
-    }
-
     public void setOnItemClickListener(ColorViewHolder.OnItemClickListener onItemClickListener) {
         this.onItemClickListener = onItemClickListener;
     }

@@ -2,6 +2,8 @@ package ru.gb.course1.myapplication.data;
 
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import com.snappydb.DB;
 import com.snappydb.DBFactory;
 import com.snappydb.SnappydbException;
@@ -10,6 +12,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import ru.gb.course1.myapplication.domain.ColorEntity;
 import ru.gb.course1.myapplication.domain.ColorsRepo;
 
@@ -47,6 +51,11 @@ public class SnappyDbColorsRepoImpl implements ColorsRepo {
 
     @Override
     public List<ColorEntity> getColors() {
+        try {
+            Thread.sleep(3_000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         final ArrayList<ColorEntity> colorsList = new ArrayList<>();
         try {
             ColorEntity[] array = db.getArray(SNAPPY_ARRAY_KEY, ColorEntity.class);
@@ -74,5 +83,17 @@ public class SnappyDbColorsRepoImpl implements ColorsRepo {
         } catch (SnappydbException e) {
             e.printStackTrace();
         }
+    }
+
+    @NonNull
+    @Override
+    public Observable<List<ColorEntity>> getColorsObservable() {
+        return null;
+    }
+
+    @NonNull
+    @Override
+    public Single<List<ColorEntity>> getColorsSingle() {
+        return null;
     }
 }

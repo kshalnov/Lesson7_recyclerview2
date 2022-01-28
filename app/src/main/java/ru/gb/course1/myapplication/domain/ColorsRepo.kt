@@ -1,18 +1,21 @@
-package ru.gb.course1.myapplication.domain;
+package ru.gb.course1.myapplication.domain
 
-import java.util.List;
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
 
 // Create Read Update Delete
-public interface ColorsRepo {
+interface ColorsRepo {
     // Create
-    void addColor(ColorEntity colorEntity);
+    fun addColor(colorEntity: ColorEntity)
 
     // Read
-    List<ColorEntity> getColors();
+    fun getColors(): List<ColorEntity>
+    val colorsObservable: Observable<List<ColorEntity>>
+    val colorsSingle: Single<List<ColorEntity>>
 
     // Update
     // todo
 
     // Delete
-    void deleteItem(String id);
+    fun deleteItem(id: String)
 }

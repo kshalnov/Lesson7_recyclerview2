@@ -6,20 +6,14 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers
 import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.disposables.CompositeDisposable
 import io.reactivex.rxjava3.kotlin.subscribeBy
 import io.reactivex.rxjava3.schedulers.Schedulers
-import ru.gb.course1.myapplication.data.SnappyDbColorsRepoImpl
+import ru.gb.course1.myapplication.data.SimpleColorsRepoImpl
 import ru.gb.course1.myapplication.domain.ColorsRepo
-import java.util.concurrent.TimeUnit
 
 
 class App : Application() {
-    private val snappyRepo = SnappyDbColorsRepoImpl()
-
-    val colorsRepo: ColorsRepo by lazy {
-        SnappyDbColorsRepoImpl().apply { init(this@App) }
-    }
+    val colorsRepo: ColorsRepo by lazy { SimpleColorsRepoImpl() }
 
     override fun onCreate() {
         super.onCreate()
@@ -28,7 +22,6 @@ class App : Application() {
 
     override fun onTerminate() {
         super.onTerminate()
-        snappyRepo.destroy()
     }
 }
 
@@ -49,7 +42,7 @@ fun foo(context: Context) {
     // MayBe - onNext(0 или 1 раз) -> onComplete / onError
     // Completable - onComplete / onError
 
-    val disposable = observable
+    val disposable = observable // livedata
         .filter {
             it % 2 == 0
         }
@@ -66,7 +59,7 @@ fun foo(context: Context) {
             }
         }
         .subscribeOn(Schedulers.computation())
-        .subscribeBy(
+        .subscribeBy( // observe
             onError = {
                 Toast.makeText(context, "doOnError $it", Toast.LENGTH_SHORT).show()
             },

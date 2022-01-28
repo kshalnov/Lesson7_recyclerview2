@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -11,6 +13,8 @@ import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Observable;
+import io.reactivex.rxjava3.core.Single;
 import ru.gb.course1.myapplication.domain.ColorEntity;
 import ru.gb.course1.myapplication.domain.ColorsRepo;
 
@@ -66,5 +70,17 @@ public class SharedPreferencesColorsRepoImpl implements ColorsRepo {
                 .edit()
                 .putString(SHARED_PREFS_COLORS_KEY, jsonString)
                 .apply();
+    }
+
+    @NonNull
+    @Override
+    public Observable<List<ColorEntity>> getColorsObservable() {
+        return null;
+    }
+
+    @NonNull
+    @Override
+    public Single<List<ColorEntity>> getColorsSingle() {
+        return null;
     }
 }

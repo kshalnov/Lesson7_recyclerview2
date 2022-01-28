@@ -1,33 +1,66 @@
-package ru.gb.course1.myapplication.data;
+package ru.gb.course1.myapplication.data
 
-import java.util.ArrayList;
-import java.util.List;
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.core.Single
+import io.reactivex.rxjava3.subjects.BehaviorSubject
+import ru.gb.course1.myapplication.domain.ColorEntity
+import ru.gb.course1.myapplication.domain.ColorsRepo
+import ru.gb.course1.myapplication.util.Utils
+import java.util.*
+import java.util.concurrent.TimeUnit
 
-import ru.gb.course1.myapplication.domain.ColorEntity;
-import ru.gb.course1.myapplication.domain.ColorsRepo;
+class SimpleColorsRepoImpl : ColorsRepo {
+    private val data: MutableList<ColorEntity> = ArrayList()
 
-public class SimpleColorsRepoImpl implements ColorsRepo {
+    private val dataSubject = BehaviorSubject.createDefault<List<ColorEntity>>(data)
 
-    private final List<ColorEntity> data = new ArrayList<>();
-
-    @Override
-    public void addColor(ColorEntity colorEntity) {
-        data.add(0, colorEntity);
-    }
-
-    @Override
-    public List<ColorEntity> getColors() {
-        return new ArrayList<>(data);
-    }
-
-    @Override
-    public void deleteItem(String id) {
-        for (int i = 0; i < data.size(); i++) {
-            if (data.get(i).getId().equals(id)) {
-                data.remove(i);
-                return;
+    init {
+        synchronized(data) {
+            data.add(0, Utils.randomColor())
+            data.add(0, Utils.randomColor())
+            data.add(0, Utils.randomColor())
+        }
+        Thread {
+            synchronized(data) {
+                dataSubject.onNext(data)
             }
+        }.start()
+    }
+
+    // изменяющие
+    override fun addColor(colorEntity: ColorEntity) {
+        synchronized(data) {
+            data.add(0, colorEntity)
+            dataSubject.onNext(data)
+        }
+
+    }
+
+    override fun getColors(): List<ColorEntity> {
+        synchronized(data) {
+            return ArrayList(data)
         }
     }
 
+    // изменяющие
+    override fun deleteItem(id: String) {
+        Thread {
+            Thread.sleep(2_000)
+            synchronized(data) {
+                for (i in data.indices) {
+                    if (data[i].id == id) {
+                        data.removeAt(i)
+                        dataSubject.onNext(data)
+                        break
+                    }
+                }
+            }
+        }.start()
+    }
+
+    override val colorsObservable: Observable<List<ColorEntity>>
+        get() = dataSubject
+
+    override val colorsSingle: Single<List<ColorEntity>>
+        get() = Single.timer(3, TimeUnit.SECONDS).map { data }
 }

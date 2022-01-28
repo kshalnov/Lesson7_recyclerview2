@@ -14,6 +14,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.List;
+
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
 import ru.gb.course1.myapplication.App;
 import ru.gb.course1.myapplication.AppKt;
 import ru.gb.course1.myapplication.R;
@@ -29,6 +34,8 @@ public class ColorsListFragment extends Fragment {
     private ColorsRepo colorsRepo;
 
     private Controller controller;
+
+    private Disposable disposable;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -54,7 +61,6 @@ public class ColorsListFragment extends Fragment {
         generateColorButton.setOnClickListener(v -> {
             final ColorEntity color = Utils.randomColor();
             colorsRepo.addColor(color);
-            adapter.setData(colorsRepo.getColors());
         });
         initRecycler(view);
     }
@@ -64,13 +70,17 @@ public class ColorsListFragment extends Fragment {
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         adapter = new ColorsAdapter();
         recyclerView.setAdapter(adapter);
-        adapter.setData(colorsRepo.getColors());
+
+        disposable = colorsRepo
+                .getColorsObservable()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(colorEntities -> adapter.setData(colorEntities));
+
         adapter.setOnItemClickListener(new ColorViewHolder.OnItemClickListener() {
             @Override
             public void onDeleteItem(ColorEntity item) {
                 Toast.makeText(getContext(), "Delete " + item.getHexString(), Toast.LENGTH_SHORT).show();
                 colorsRepo.deleteItem(item.getId());
-                adapter.deleteItem(item.getId());
             }
 
             @Override
@@ -87,11 +97,18 @@ public class ColorsListFragment extends Fragment {
     }
 
     public void onDeleteColor(String colorId) {
-        adapter.setData(colorsRepo.getColors());
+        // pass
     }
 
     public interface Controller {
         void showColorDetails(ColorEntity colorEntity);
     }
 
+    @Override
+    public void onDestroyView() {
+        if (disposable != null && !disposable.isDisposed()) {
+            disposable.dispose();
+        }
+        super.onDestroyView();
+    }
 }
