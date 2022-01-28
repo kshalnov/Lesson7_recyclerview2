@@ -1,33 +1,26 @@
-package ru.gb.course1.myapplication;
+package ru.gb.course1.myapplication
 
-import android.app.Application;
+import android.app.Application
+import android.content.Context
+import androidx.fragment.app.Fragment
+import ru.gb.course1.myapplication.data.SnappyDbColorsRepoImpl
+import ru.gb.course1.myapplication.domain.ColorsRepo
 
-import ru.gb.course1.myapplication.data.SharedPreferencesColorsRepoImpl;
-import ru.gb.course1.myapplication.data.SnappyDbColorsRepoImpl;
-import ru.gb.course1.myapplication.domain.ColorsRepo;
+class App : Application() {
+    private val snappyRepo = SnappyDbColorsRepoImpl()
 
-public class App extends Application {
-    private static App sInstance = null;
-
-    private SnappyDbColorsRepoImpl snappyRepo = new SnappyDbColorsRepoImpl();
-    public ColorsRepo colorsRepo;
-
-    public static App get() {
-        return sInstance;
+    val colorsRepo: ColorsRepo by lazy {
+        SnappyDbColorsRepoImpl().apply { init(this@App) }
     }
 
-    @Override
-    public void onCreate() {
-        super.onCreate();
-        snappyRepo.init(this);
-        colorsRepo = snappyRepo;
-
-        sInstance = this;
-    }
-
-    @Override
-    public void onTerminate() {
-        super.onTerminate();
-        snappyRepo.destroy();
+    override fun onTerminate() {
+        super.onTerminate()
+        snappyRepo.destroy()
     }
 }
+
+val Context.app: App
+    get() = applicationContext as App
+
+val Fragment.app: App
+    get() = requireActivity().app

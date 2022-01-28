@@ -10,6 +10,9 @@ public interface ColorsRepo {
     // Read
     List<ColorEntity> getColors();
 
+    // Update
+    // todo
+
     // Delete
     void deleteItem(String id);
 }

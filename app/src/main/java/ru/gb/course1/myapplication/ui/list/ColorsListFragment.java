@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import ru.gb.course1.myapplication.App;
+import ru.gb.course1.myapplication.AppKt;
 import ru.gb.course1.myapplication.R;
 import ru.gb.course1.myapplication.domain.ColorEntity;
 import ru.gb.course1.myapplication.domain.ColorsRepo;
@@ -47,7 +48,7 @@ public class ColorsListFragment extends Fragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        colorsRepo = App.get().colorsRepo;
+        colorsRepo = AppKt.getApp(this).getColorsRepo();
 
         generateColorButton = view.findViewById(R.id.fragment_colors_list__generate_color_button);
         generateColorButton.setOnClickListener(v -> {
