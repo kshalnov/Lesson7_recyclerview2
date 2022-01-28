@@ -45,10 +45,18 @@ fun foo(context: Context) {
     val data = listOf(1, 2, 3, 4, 5)
     val observable = Observable.fromIterable(data)
 
+    // Single - onNext(1 раз) -> onComplete / onError
+    // MayBe - onNext(0 или 1 раз) -> onComplete / onError
+    // Completable - onComplete / onError
+
     val disposable = observable
+        .filter {
+            it % 2 == 0
+        }
         .map {
             it.toString()
         }
+        .take(10)
         .observeOn(AndroidSchedulers.mainThread())
         .map {
             when (it) {
